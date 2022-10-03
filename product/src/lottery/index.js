@@ -5,6 +5,7 @@ import {
   addQipao,
   setPrizes,
   showPrizeList,
+  showPrizeResults,
   setPrizeData,
   resetPrize
 } from "./prizeList";
@@ -66,7 +67,7 @@ function initAll() {
   window.AJAX({
     url: "/getTempData",
     success(data) {
-      // 获取基础数据
+      // Get basic data
       prizes = data.cfgData.prizes;
       EACH_COUNT = data.cfgData.EACH_COUNT;
       COMPANY = data.cfgData.COMPANY;
@@ -76,7 +77,7 @@ function initAll() {
 
       TOTAL_CARDS = ROW_COUNT * COLUMN_COUNT;
 
-      // 读取当前已设置的抽奖结果
+      // Read the currently set lottery result
       basicData.leftUsers = data.leftUsers;
       basicData.luckyUsers = data.luckyData;
 
@@ -95,6 +96,7 @@ function initAll() {
       }
 
       showPrizeList(currentPrizeIndex);
+      showPrizeResults(currentPrizeIndex);
       let curLucks = basicData.luckyUsers[currentPrize.type];
       setPrizeData(currentPrizeIndex, curLucks ? curLucks.length : 0, true);
     }
@@ -203,49 +205,49 @@ function setLotteryStatus(status = false) {
 }
 
 /**
- * 事件绑定
+ * event binding
  */
 function bindEvent() {
   document.querySelector("#menu").addEventListener("click", function (e) {
     e.stopPropagation();
-    // 如果正在抽奖，则禁止一切操作
+    // If a lottery is in progress, all operations are prohibited
     if (isLotting) {
       if (e.target.id === "lottery") {
         rotateObj.stop();
-        btns.lottery.innerHTML = "开始抽奖";
+        btns.lottery.innerHTML = "START";
       } else {
-        addQipao("正在抽奖，抽慢一点点～～");
+        addQipao("The lottery is being drawn");
       }
       return false;
     }
 
     let target = e.target.id;
     switch (target) {
-      // 显示数字墙
+      // Display digital wall
       case "welcome":
         switchScreen("enter");
         rotate = false;
         break;
-      // 进入抽奖
+      // Enter the lottery
       case "enter":
         removeHighlight();
-        addQipao(`马上抽取[${currentPrize.title}],不要走开。`);
+        addQipao(`The graveyard raffle is prepared, you can now start it`);
         // rotate = !rotate;
         rotate = true;
         switchScreen("lottery");
         break;
-      // 重置
+      // reset
       case "reset":
         let doREset = window.confirm(
-          "是否确认重置数据，重置后，当前已抽的奖项全部清空？"
+          "Are you sure to reset the data? After reset, all the prizes that have been drawn will be cleared.？"
         );
         if (!doREset) {
           return;
         }
-        addQipao("重置所有数据，重新抽奖");
+        addQipao("Reset all data");
         addHighlight();
         resetCard();
-        // 重置所有数据
+        // reset all data
         currentLuckys = [];
         basicData.leftUsers = Object.assign([], basicData.users);
         basicData.luckyUsers = {};
@@ -259,41 +261,41 @@ function bindEvent() {
       // 抽奖
       case "lottery":
         setLotteryStatus(true);
-        // 每次抽奖前先保存上一次的抽奖数据
+        // Save the previous lottery data before each lottery
         saveData();
-        //更新剩余抽奖数目的数据显示
+        //Update the data display of the remaining number of draws
         changePrize();
         resetCard().then(res => {
-          // 抽奖
+          // lottery
           lottery();
         });
-        addQipao(`正在抽取[${currentPrize.title}],调整好姿势`);
+        addQipao(`Raffle started, push stop button when ready`);
         break;
-      // 重新抽奖
+      // Redraw
       case "reLottery":
         if (currentLuckys.length === 0) {
-          addQipao(`当前还没有抽奖，无法重新抽取喔~~`);
+          addQipao(`There is no lottery yet, so you cannot re-draw~~`);
           return;
         }
         setErrorData(currentLuckys);
-        addQipao(`重新抽取[${currentPrize.title}],做好准备`);
+        addQipao(`redraw[${currentPrize.title}],be ready`);
         setLotteryStatus(true);
-        // 重新抽奖则直接进行抽取，不对上一次的抽奖数据进行保存
-        // 抽奖
+        // If the lottery is redrawn, it will be drawn directly, and the data of the last lottery will not be saved.
+        // lottery
         resetCard().then(res => {
-          // 抽奖
+          // lottery
           lottery();
         });
         break;
-      // 导出抽奖结果
+      // Export lottery results
       case "save":
         saveData().then(res => {
           resetCard().then(res => {
-            // 将之前的记录置空
+            // empty the previous record
             currentLuckys = [];
           });
           exportData();
-          addQipao(`数据已保存到EXCEL中。`);
+          addQipao(`Data has been saved to EXCEL。`);
         });
         break;
     }
@@ -318,7 +320,7 @@ function switchScreen(type) {
 }
 
 /**
- * 创建元素
+ * create element
  */
 function createElement(css, text) {
   let dom = document.createElement("div");
@@ -328,7 +330,7 @@ function createElement(css, text) {
 }
 
 /**
- * 创建名牌
+ * Create a card
  */
 function createCard(user, isBold, id, showTable) {
   var element = createElement();
@@ -342,10 +344,10 @@ function createCard(user, isBold, id, showTable) {
   } else {
     element.className = "element";
     element.style.backgroundColor =
-      "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
+      "rgba(0,0,0," + (Math.random() * 0.7 + 0.25) + ")";
   }
-  //添加公司标识
-  element.appendChild(createElement("company", COMPANY));
+  //Add company logo
+  element.appendChild(createElement("name", user[1]));
 
   element.appendChild(createElement("name", user[1]));
 
@@ -366,7 +368,7 @@ function addHighlight() {
 }
 
 /**
- * 渲染地球等
+ * render the globe
  */
 function transform(targets, duration) {
   // TWEEN.removeAll();
@@ -456,14 +458,14 @@ function onWindowResize() {
 }
 
 function animate() {
-  // 让场景通过x轴或者y轴旋转
+  // Rotate the scene through the x-axis or y-axis
   // rotate && (scene.rotation.y += 0.088);
 
   requestAnimationFrame(animate);
   TWEEN.update();
   controls.update();
 
-  // 渲染循环
+  // render loop
   // render();
 }
 
@@ -477,7 +479,7 @@ function selectCard(duration = 600) {
     tag = -(currentLuckys.length - 1) / 2,
     locates = [];
 
-  // 计算位置信息, 大于5个分两排显示
+  // Calculate the position information, more than 5 are displayed in two rows
   if (currentLuckys.length > 5) {
     let yPosition = [-87, 87],
       l = selectedCardIndex.length,
@@ -511,7 +513,7 @@ function selectCard(duration = 600) {
 
   let text = currentLuckys.map(item => item[1]);
   addQipao(
-    `恭喜${text.join("、")}获得${currentPrize.title}, 新的一年必定旺旺旺。`
+    `You won  ${text.join("、")}`
   );
 
   selectedCardIndex.forEach((cardIndex, index) => {
@@ -550,13 +552,13 @@ function selectCard(duration = 600) {
     .onUpdate(render)
     .start()
     .onComplete(() => {
-      // 动画结束后可以操作
+      // Can be operated after the animation is over
       setLotteryStatus();
     });
 }
 
 /**
- * 重置抽奖牌内容
+ * Reset raffle card content
  */
 function resetCard(duration = 500) {
   if (currentLuckys.length === 0) {
@@ -608,27 +610,27 @@ function resetCard(duration = 500) {
 }
 
 /**
- * 抽奖
+ * lottery
  */
 function lottery() {
   // if (isLotting) {
   //   rotateObj.stop();
-  //   btns.lottery.innerHTML = "开始抽奖";
+  //   btns.lottery.innerHTML = "Start the draw";
   //   return;
   // }
-  btns.lottery.innerHTML = "结束抽奖";
+  btns.lottery.innerHTML = "STOP";
   rotateBall().then(() => {
-    // 将之前的记录置空
+    // empty the previous record
     currentLuckys = [];
     selectedCardIndex = [];
-    // 当前同时抽取的数目,当前奖品抽完还可以继续抽，但是不记录数据
+    // The current number of simultaneous draws. After the current prize is drawn, you can continue to draw, but no data is recorded.
     let perCount = EACH_COUNT[currentPrizeIndex],
       luckyData = basicData.luckyUsers[currentPrize.type],
       leftCount = basicData.leftUsers.length,
       leftPrizeCount = currentPrize.count - (luckyData ? luckyData.length : 0);
 
     if (leftCount < perCount) {
-      addQipao("剩余参与抽奖人员不足，现在重新设置所有人员可以进行二次抽奖！");
+      addQipao("There are not enough people to participate in the lottery, now reset all the people to have a second lottery!！");
       basicData.leftUsers = basicData.users.slice();
       leftCount = basicData.leftUsers.length;
     }
@@ -656,11 +658,11 @@ function lottery() {
 }
 
 /**
- * 保存上一次的抽奖结果
+ * Save the last lottery result
  */
 function saveData() {
   if (!currentPrize) {
-    //若奖品抽完，则不再记录数据，但是还是可以进行抽奖
+    //If the prizes are drawn, the data will no longer be recorded, but the draw can still be performed.
     return;
   }
 
@@ -680,7 +682,7 @@ function saveData() {
   }
 
   if (currentLuckys.length > 0) {
-    // todo by xc 添加数据保存机制，以免服务器挂掉数据丢失
+    // todo by xcAdd a data saving mechanism to prevent the server from hanging up and data loss
     return setData(type, currentLuckys);
   }
   return Promise.resolve();
@@ -707,18 +709,18 @@ function random(num) {
 function changeCard(cardIndex, user) {
   let card = threeDCards[cardIndex].element;
 
-  card.innerHTML = `<div class="company">${COMPANY}</div><div class="name">${
-    user[1]
-  }</div><div class="details">${user[0] || ""}<br/>${user[2] || "PSST"}</div>`;
+  card.innerHTML = `<div class="name">${user[1]}</div><div class="file">
+  <img src="./img/${user[0]}.png" alt="" loading="lazy">
+  </div>`;
 }
 
 /**
- * 切换名牌背景
+ * CARD
  */
 function shine(cardIndex, color) {
   let card = threeDCards[cardIndex].element;
   card.style.backgroundColor =
-    color || "rgba(0,127,127," + (Math.random() * 0.7 + 0.25) + ")";
+    color || "rgba(238, 237, 222)";
 }
 
 /**
@@ -804,7 +806,7 @@ function reset() {
 }
 
 function createHighlight() {
-  let year = new Date().getFullYear() + "";
+  let year = 578 + "";
   let step = 4,
     xoffset = 1,
     yoffset = 1,
@@ -855,7 +857,7 @@ window.onload = function () {
             animate();
           },
           () => {
-            addQipao("背景音乐自动播放失败，请手动播放！");
+            addQipao("The background music failed to play automatically");
           }
         );
       } else {

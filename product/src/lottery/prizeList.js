@@ -5,10 +5,10 @@ let defaultType = 0;
 
 let prizes;
 const DEFAULT_MESS = [
-  "我是该抽中一等奖还是一等奖呢，纠结ing...",
-  "听说要提前一个月吃素才能中大奖喔！",
-  "好想要一等奖啊！！！",
-  "一等奖有没有人想要呢？",
+  "Prize list message 1...",
+  "Prize list message 2...",
+  "Prize list message 3...",
+  "Prize list message s...",
   "五等奖也不错，只要自己能中奖就行",
   "祝大家新年快乐！",
   "中不中奖不重要，大家吃好喝好。",
@@ -158,7 +158,9 @@ function showPrizeList(currentPrizeIndex) {
   if (currentPrize.type === defaultType) {
     currentPrize.count === "不限制";
   }
-  let htmlCode = `<div class="prize-mess">正在抽取<label id="prizeType" class="prize-shine">${currentPrize.text}</label><label id="prizeText" class="prize-shine">${currentPrize.title}</label>，剩余<label id="prizeLeft" class="prize-shine">${currentPrize.count}</label>个</div><ul class="prize-list">`;
+  let htmlCode = `<div class="prize-mess">
+  <label id="prizeType" class="prize-shine"></label>
+  </div><ul class="prize-list">`;
   prizes.forEach(item => {
     if (item.type === defaultType) {
       return true;
@@ -167,14 +169,12 @@ function showPrizeList(currentPrizeIndex) {
       item.type == currentPrize.type ? "shine" : ""
     }">
                         <span></span><span></span><span></span><span></span>
-                        <div class="prize-img">
-                            <img src="${item.img}" alt="${item.title}">
-                        </div>
                         <div class="prize-text">
                             <h5 class="prize-title">${item.text} ${
       item.title
     }</h5>
                             <div class="prize-count">
+                            
                                 <div class="progress">
                                     <div id="prize-bar-${
                                       item.type
@@ -187,12 +187,25 @@ function showPrizeList(currentPrizeIndex) {
                                     ${item.count + "/" + item.count}
                                 </div>
                             </div>
+                                
                         </div>
+                        
+                        
                     </li>`;
   });
   htmlCode += `</ul>`;
 
   document.querySelector("#prizeBar").innerHTML = htmlCode;
+}
+
+function showPrizeResults(currentPrizeIndex) {
+  let htmlCode = `<div class="prize-mess">
+  <label id="prizeType" class="prize-shine"></label>
+  <label id="prizeText" class="prize-shine"></label>
+  <label id="prizeLeft" class="prize-shine"></label>
+  </div>`;
+
+  document.querySelector("#prizeResults").innerHTML = htmlCode;
 }
 
 function resetPrize(currentPrizeIndex) {
@@ -247,9 +260,9 @@ let setPrizeData = (function () {
     }
 
     if (currentPrizeIndex === 0) {
-      prizeElement.prizeType.textContent = "特别奖";
+      prizeElement.prizeType.currentLuckys = "Out of BIRTH tokens";
       prizeElement.prizeText.textContent = " ";
-      prizeElement.prizeLeft.textContent = "不限制";
+      prizeElement.prizeLeft.textContent = " ";
       return;
     }
 
@@ -306,6 +319,7 @@ function addDanMu(text) {
 export {
   startMaoPao,
   showPrizeList,
+  showPrizeResults,
   setPrizeData,
   addDanMu,
   setPrizes,

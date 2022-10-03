@@ -76,7 +76,7 @@
       initializeStars();
     }
     if (warp == 0) {
-      c.fillStyle = "rgba(0,10,20,1)";
+      c.fillStyle = "rgb(32,32,32)";
       c.fillRect(0, 0, canvas.width, canvas.height);
     }
     c.fillStyle = "rgba(209, 255, 255, " + radius + ")";
@@ -89,8 +89,7 @@
       pixelY += centerY;
       pixelRadius = 1 * (focalLength / star.z);
 
-      c.fillRect(pixelX, pixelY, pixelRadius, pixelRadius);
-      c.fillStyle = "rgba(209, 255, 255, " + star.o + ")";
+  
       //c.fill();
     }
   }

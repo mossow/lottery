@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>年会抽奖</title>
+    <title>Akali Raffle</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -18,26 +18,23 @@
     <script src="./lib/ajax.js"></script>
 
     <div class="canvas-box">
-      <canvas id="canvas">你的浏览器不支持canvas</canvas>
+      <canvas id="canvas">CANVAS BOX</canvas>
     </div>
 
-    <div class="music">
-      <audio id="music" src="./data/music.mp3" class="music-item" loop></audio>
-      <div id="musicBox" class="music-box" title="播放/暂停背景音乐">Music</div>
-    </div>
+
 
     <div id="prizeBar"></div>
+    <div id="prizeResults"></div>
 
     <div id="container"></div>
 
     <div id="menu">
-      <button id="enter">进入抽奖</button>
+      <button id="enter">ENTER</button>
       <div id="lotteryBar" class="none">
-        <button id="lottery">开始抽奖</button>
-        <button id="reLottery">重新抽奖</button>
+        <button id="lottery">START</button>
         <div class="fixed-bar">
-          <button id="save" class="fixed-btn">导出抽奖结果</button>
-          <button id="reset" class="fixed-btn">重置</button>
+          <button id="save" class="fixed-btn">SAVE</button>
+          <button id="reset" class="fixed-btn">RESET</button>
         </div>
       </div>
     </div>

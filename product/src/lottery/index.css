@@ -4,14 +4,14 @@ body {
 }
 
 body {
-  background: linear-gradient(to bottom, #131313 0%, #02101c 100%);
+  background: linear-gradient(to bottom, #0f0d0d 0%, #181414 0%);
   margin: 0;
   font-family: Helvetica, sans-serif;
   overflow: hidden;
 }
 
 a {
-  color: #ffffff;
+  color: #ff0000;
 }
 
 .none {
@@ -20,7 +20,7 @@ a {
 
 #container {
   z-index: 3;
-  position: relative;
+  position: absolute;
   margin: 0 15vh;
 }
 
@@ -39,7 +39,7 @@ a {
 #info {
   position: absolute;
   width: 100%;
-  color: #ffffff;
+  color: #ff0000;
   padding: 5px;
   font-family: Monospace;
   font-size: 13px;
@@ -58,16 +58,16 @@ a {
 .element {
   width: 12vh;
   height: 16vh;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
-  border: 1px solid rgba(127, 255, 255, 0.25);
+  box-shadow: 0 0 12px rgba(226, 212, 227, 0.75);
+  border: 1px solid rgba(26, 36, 9, 0.25);
   text-align: center;
   cursor: default;
   transition: background-color 0.3s ease-in;
 }
 
 .element:hover {
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.75);
-  border: 1px solid rgba(127, 255, 255, 0.75);
+  box-shadow: 0 0 12px rgba(4, 255, 0, 0.75);
+  border: 1px solid rgba(34, 67, 5, 0.75);
 }
 
 .element .company {
@@ -76,18 +76,33 @@ a {
   right: 0;
   width: 100%;
   font-size: 2vh;
-  color: rgba(127, 255, 255, 0.75);
+  color: rgba(252, 250, 248, 0.75);
 }
 
 .element .name {
   position: absolute;
-  top: 4.6vh;
+  font-size: 0.5vw;
+  top: 12.5vh;
   left: 0;
   right: 0;
-  font-size: 2.9vh;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.75);
-  text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
+  color: rgba(32, 32, 32, 0.75);
+  text-shadow: 0 0 1vh rgba(32, 32, 32, 0.95);
+}
+
+.element .file {
+  object-fit: contain;
+  top: 0vh;
+  width: 12vh;
+  height: 12vh;
+  background-color: #fff;
+  text-shadow: 0 0 1vh rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+}
+
+.element .file img{
+  width: 12vh;
+  height: 12vh;
 }
 
 .element .details {
@@ -96,13 +111,12 @@ a {
   left: 0;
   right: 0;
   font-size: 1.6vh;
-  color: rgba(127, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 button {
-  color: rgba(127, 255, 255, 0.75);
-  background: transparent;
-  outline: 1px solid rgba(127, 255, 255, 0.75);
+  color: rgb(23, 32, 32);
+  background: rgb(238, 237, 222);
   border: 0;
   padding: 1.6vh 4vh;
   margin: 0 4.6vh;
@@ -112,22 +126,22 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 255, 255, 0.5);
+  background-color: rgb(238, 237, 222);
 }
 
 button:active {
   color: #000000;
-  background-color: rgba(0, 255, 255, 0.75);
+  background-color: rgba(255, 255 , 255);
 }
 
 .highlight {
-  background-color: rgba(253, 105, 0, 0.95) !important;
-  box-shadow: 0 0 12px rgba(253, 105, 0, 0.95);
-  border: 1px solid rgba(253, 105, 0, 0.25);
+  background-color: rgba(238, 237, 222) !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255);
+  border: 1px solid rgba(32, 32, 32, 0.25);
 }
 
 .highlight.element .name {
-  text-shadow: 0 0 16px rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 16px rgba(22, 32, 32, 0.25);
 }
 
 .prize.element .name {
@@ -136,8 +150,8 @@ button:active {
 
 .prize.element {
   transition: background-color 1.5s ease-in 0.3s;
-  background-color: rgba(253, 105, 0, 0.85) !important;
-  box-shadow: 0 0 12px rgba(253, 105, 0, 0.95);
+  background-color: rgba(255, 255, 255) !important;
+  box-shadow: 0 0 12px rgba(32, 32, 32);
 }
 
 .prize .company,
@@ -146,7 +160,7 @@ button:active {
 .highlight .company,
 .highlight .name,
 .highlight .details {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(32, 32, 32, 0.85);
 }
 
 .dan-mu {
@@ -161,8 +175,8 @@ button:active {
   line-height: 2.2vh;
   border-radius: 1vh;
   box-sizing: border-box;
-  background-color: rgba(0, 127, 127, 0.37);
-  box-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.37);
+  box-shadow: 0 0 4px rgb(238, 237, 222);
   border: 1px solid rgba(127, 255, 255, 0.25);
   color: rgba(127, 255, 255, 0.75);
 }
@@ -176,6 +190,14 @@ button:active {
   left: 0;
   padding-left: 1.2vh;
   top: 1.2vh;
+  z-index: 2;
+}
+
+#prizeResults {
+  position: fixed;
+  left: 0;
+  padding-left: 1.2vh;
+  top: 25.2vh;
   z-index: 2;
 }
 
@@ -193,9 +215,9 @@ button:active {
   justify-content: center;
   border-radius: 4px;
   flex-wrap: nowrap;
-  background-color: rgba(0, 127, 127, 0.37);
+  background-color: rgb(32, 32, 32);
   border: 1px solid rgba(127, 255, 255, 0.25);
-  color: rgba(127, 255, 255, 0.75);
+  color: rgb(238, 237, 222);
   width: 30vh;
   height: 10vh;
   box-sizing: border-box;
@@ -208,7 +230,7 @@ button:active {
   margin-right: 1.2vh;
   border-radius: 50%;
   background-color: #fff;
-  text-shadow: 0 0 1vh rgba(0, 255, 255, 0.95);
+  text-shadow: 0 0 1vh rgb(238, 237, 222);
   overflow: hidden;
 }
 
@@ -237,7 +259,7 @@ button:active {
 
 .prize-count .progress {
   height: 1.8vh;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.5);
   padding: 1px;
   overflow: visible;
   border-radius: 1vh;
@@ -247,7 +269,7 @@ button:active {
   border-radius: 1.8vh;
   position: relative;
   animation: animate-positive 2s;
-  background-color: #d9534f;
+  background-color: rgb(238, 237, 222);
   height: 1.8vh;
   -webkit-transition: width 0.6s ease;
   -o-transition: width 0.6s ease;
@@ -265,7 +287,7 @@ button:active {
       transparent 25%,
       transparent 50%,
       rgba(255, 255, 255, 0.15) 50%,
-      rgba(255, 255, 255, 0.15) 75%,
+      rgba(255, 255   , 255, 0.15) 75%,
       transparent 75%,
       transparent);
   background-image: -o-linear-gradient(45deg,
@@ -332,7 +354,7 @@ button:active {
 
 .prize-count-left {
   position: absolute;
-  color: #fff;
+  color: rgb(0, 0, 0);
   right: 9px;
   font-size: 1.8vh;
   line-height: 1.6vh;
@@ -341,7 +363,7 @@ button:active {
 }
 
 .shine {
-  box-shadow: 0 0 15px 0 rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 15px 0 rgb(238, 237, 222);
   transform: scale(1.2);
   transform-origin: left center;
   position: relative;
@@ -374,7 +396,7 @@ button:active {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #03e9f4);
+  background: linear-gradient(90deg, transparent, rgb(238, 237, 222));
   animation: animate1 1s linear infinite
 }
 
@@ -394,7 +416,7 @@ button:active {
   right: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(180deg, transparent, #03e9f4);
+  background: linear-gradient(180deg, transparent, rgb(238, 237, 222));
   animation: animate2 1s linear infinite;
   animation-delay: .25s
 }
@@ -415,7 +437,7 @@ button:active {
   right: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(270deg, transparent, #03e9f4);
+  background: linear-gradient(270deg, transparent, rgb(238, 237, 222));
   animation: animate3 1s linear infinite;
   animation-delay: .50s
 }
@@ -436,7 +458,7 @@ button:active {
   left: 0;
   width: 2px;
   height: 100%;
-  background: linear-gradient(360deg, transparent, #03e9f4);
+  background: linear-gradient(360deg, transparent, rgb(238, 237, 222));
   animation: animate4 1s linear infinite;
   animation-delay: .75s
 }
@@ -468,7 +490,7 @@ button:active {
 .prize-shine {
   font-size: 5vh;
   font-weight: bold;
-  color: #db5c58;
+  color: rgb(238, 237, 222);
   vertical-align: middle;
   padding: 0 6px;
 }
@@ -489,8 +511,8 @@ button:active {
   margin: 4px 0;
   box-sizing: border-box;
   font-size: 14px;
-  background-color: rgba(127, 255, 255, 0.25);
-  color: rgba(127, 255, 255, 0.75);
+  background-color:  rgba(0, 0, 0, 0.37);
+  color: rgb(238, 237, 222) ;
 }
 
 .music {
@@ -514,7 +536,7 @@ button:active {
   font-size: 1.4vh;
   color: #fff;
   cursor: pointer;
-  background-color: rgba(253, 105, 0, 0.9);
+  background-color: rgb(238, 237, 222);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -551,7 +573,7 @@ button:active {
 
 #lottery {
   animation: breath 1.6s linear infinite;
-  box-shadow: 0px 0px 15px rgb(127 255 255 / 75%);
+  box-shadow: 0px 0px 15px rgba(226, 212, 227, 0.75);
 }
 
 @keyframes breath {
